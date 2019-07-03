@@ -1,0 +1,6 @@
+framework module Pods_Crowdd {
+  umbrella header "Pods-Crowdd-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module Pods_CrowddTests {
+  umbrella header "Pods-CrowddTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

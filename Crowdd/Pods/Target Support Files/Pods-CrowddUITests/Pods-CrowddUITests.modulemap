@@ -1,0 +1,6 @@
+framework module Pods_CrowddUITests {
+  umbrella header "Pods-CrowddUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
