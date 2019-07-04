@@ -13,43 +13,49 @@ import CoreLocation
 
 
 class ViewController: UIViewController {
+//    Variable declarations
     var ref : DatabaseReference!
     let locationManager = CLLocationManager()
     let regionInMeters: Double = 1000
-    
+    var timer = Timer()
     @IBOutlet weak var MapView: MKMapView!
     
+//    Global variables
     struct UserVars{
         static var name = "Kieran"
         static var uuid = UIDevice.current.identifierForVendor?.uuidString ?? "ERROR"
         static var active = false
         static var code = ""
-        static var lat = 0.0
-        static var long = 0.0
-        
+        static var coords = [0.0, 0.0]
+        static var friends = Dictionary<String,[Double]>()
+        static var pins = [MKPointAnnotation]()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ref =  Database.database().reference()
-        
-        // Do any additional setup after loading the view.
+//        Timer
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ViewController.populates), userInfo: nil, repeats: true)
+//        Location services
         checkLocationServices()
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
     }
     
-    
+//    Takes you to the group page
     @IBAction func CreateGroupBtn(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let popUp = storyBoard.instantiateViewController(withIdentifier: "CreateGroup")
         self.present(popUp, animated: true, completion: nil)
     }
     
+//    Location set up
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+//    Centering on user
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
@@ -57,12 +63,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func addPin(lat: Double, long: Double){
-        let annotation1 = MKPointAnnotation()
-        annotation1.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        MapView.addAnnotation(annotation1)
-    }
-    
+//    Checking permission for location
     func checkLocationServices(){
         if CLLocationManager.locationServicesEnabled() {
             setupLocationManager()
@@ -72,8 +73,7 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    
+//    Checking authorization
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
@@ -94,6 +94,39 @@ class ViewController: UIViewController {
             
         }
     }
+    
+//    Populating the other people in your group
+    @objc func populates(){
+        if UserVars.active == true {
+//            Updating friends array
+            ref.child(UserVars.code).observe(DataEventType.value) { (snapshot) in
+                let update = snapshot.value as? [String : AnyObject] ?? [:]
+                for (id, data) in update {
+                    if(id != UserVars.uuid){
+                        UserVars.friends[data["name"] as! String] = data["coords"] as? [Double]
+                    }
+                }
+            }
+            ref.child(ViewController.UserVars.code).child(ViewController.UserVars.uuid).updateChildValues(["coords":ViewController.UserVars.coords])
+//          Creating annotations
+            for (name, coords) in UserVars.friends{
+                var found = false
+                for pin in UserVars.pins{
+                    if(pin.title == name){
+                        pin.coordinate = CLLocationCoordinate2D(latitude: coords[0], longitude: coords[1])
+                        found = true
+                    }
+                }
+                if(!found){
+                    let createpoint = MKPointAnnotation()
+                    createpoint.title = name
+                    createpoint.coordinate = CLLocationCoordinate2D(latitude: coords[0], longitude: coords[1])
+                    UserVars.pins.append(createpoint)
+                    MapView.addAnnotation(createpoint)
+                }
+            }
+        }
+    }
 }
 
 extension ViewController : CLLocationManagerDelegate {
@@ -101,13 +134,13 @@ extension ViewController : CLLocationManagerDelegate {
         guard let location = locations.last else { return }
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-        MapView.setRegion(region, animated: true)
-        UserVars.lat = location.coordinate.latitude
-        UserVars.long = location.coordinate.latitude
-        if UserVars.active == true {
-            ref.child(ViewController.UserVars.code).child(ViewController.UserVars.uuid).updateChildValues(["lat":ViewController.UserVars.lat,"long":ViewController.UserVars.long])
+        //MapView.setRegion(region, animated: true)
+        UserVars.coords[0] = location.coordinate.latitude
+        UserVars.coords[1] = location.coordinate.longitude
+        if (UserVars.active == true){
+            ref.child(UserVars.code).child(UserVars.uuid).updateChildValues(["coords":UserVars.coords])
         }
-        print("locations = \(locations)")
+        
     }
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuthorization()

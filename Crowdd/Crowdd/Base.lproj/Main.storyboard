@@ -25,7 +25,7 @@
                                 </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mif-r0-2aN">
-                                <rect key="frame" x="184" y="794" width="46" height="30"/>
+                                <rect key="frame" x="167" y="560" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Create"/>
                                 <connections>
@@ -85,6 +85,22 @@
                                             <action selector="Close:" destination="tEU-zs-AYd" eventType="touchUpInside" id="vJH-bc-isj"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTN-K2-5Y7">
+                                        <rect key="frame" x="255" y="304" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Join"/>
+                                        <connections>
+                                            <action selector="JoinGroupBtn:" destination="tEU-zs-AYd" eventType="touchUpInside" id="iXX-Fy-AE9"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9sW-cy-sbb">
+                                        <rect key="frame" x="195" y="163" width="140" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -93,6 +109,7 @@
                         <viewLayoutGuide key="safeArea" id="bSU-GE-F19"/>
                     </view>
                     <connections>
+                        <outlet property="CodeEntry" destination="9sW-cy-sbb" id="kGL-2s-8Lf"/>
                         <outlet property="CodeLabel" destination="hMu-zx-6bl" id="I1N-T6-hdL"/>
                     </connections>
                 </viewController>

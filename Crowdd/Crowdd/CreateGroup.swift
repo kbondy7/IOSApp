@@ -9,13 +9,15 @@
 import UIKit
 import FirebaseDatabase
 
-class CreateGroup: UIViewController {
+class CreateGroup: UIViewController, UITextFieldDelegate {
     var ref : DatabaseReference!
-
     
+    
+    @IBOutlet weak var CodeEntry: UITextField!
     @IBOutlet weak var CodeLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        CodeEntry.delegate = self
         ref = Database.database().reference()
         ViewController.UserVars.code = randomString(length: 10)
         ViewController.UserVars.uuid = UIDevice.current.identifierForVendor?.uuidString ?? "ERROR"
@@ -24,11 +26,28 @@ class CreateGroup: UIViewController {
     }
     
     @IBAction func StartGroupBtn(_ sender: UIButton) {
-        ref.child(ViewController.UserVars.code).child(ViewController.UserVars.uuid).setValue(["name":ViewController.UserVars.name,"lat":ViewController.UserVars.lat,"long":ViewController.UserVars.long])
-            ViewController.UserVars.active = true
-        
+       
+        ref.child(ViewController.UserVars.code).child(ViewController.UserVars.uuid).setValue(["name":ViewController.UserVars.name,"coords":ViewController.UserVars.coords])
+        ViewController.UserVars.active = true
+        dismiss(animated: true)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        //or
+        //self.view.endEditing(true)
+        return true
+    }
+    @IBAction func JoinGroupBtn(_ sender: UIButton) {
+        let entryCode = CodeEntry?.text ?? "empty"
+        
+        if(entryCode != "empty"){
+            ViewController.UserVars.code = entryCode
+        ref.child(entryCode).child(ViewController.UserVars.uuid).setValue(["name":ViewController.UserVars.name,"coords":ViewController.UserVars.coords])
+        }
+        ViewController.UserVars.active = true
+        dismiss(animated: true)
+    }
     @IBAction func Close(_ sender: UIButton) {
         dismiss(animated: true)
     }
