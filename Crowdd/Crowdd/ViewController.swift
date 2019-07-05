@@ -19,10 +19,11 @@ class ViewController: UIViewController {
     let regionInMeters: Double = 1000
     var timer = Timer()
     @IBOutlet weak var MapView: MKMapView!
+    @IBOutlet weak var StartBtn: UIButton!
     
 //    Global variables
     struct UserVars{
-        static var name = "Kieran"
+        static var name = "Doug"
         static var uuid = UIDevice.current.identifierForVendor?.uuidString ?? "ERROR"
         static var active = false
         static var code = ""
@@ -34,6 +35,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ref =  Database.database().reference()
+        if(UserVars.active == true){
+            populates()
+            
+            
+        }
 //        Timer
         timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ViewController.populates), userInfo: nil, repeats: true)
 //        Location services
@@ -44,9 +50,22 @@ class ViewController: UIViewController {
     
 //    Takes you to the group page
     @IBAction func CreateGroupBtn(_ sender: UIButton) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let popUp = storyBoard.instantiateViewController(withIdentifier: "CreateGroup")
-        self.present(popUp, animated: true, completion: nil)
+        if(UserVars.active)
+        {
+            UserVars.active = false
+            StartBtn.backgroundColor = UIColor(displayP3Red: 0, green: 1.0, blue: 0, alpha: 1)
+            if(UserVars.friends.count == 0){
+                ref.child(UserVars.code).removeValue()
+            }
+            else{
+                ref.child(UserVars.code).child(UserVars.uuid).removeValue()
+            }
+        }
+        else{
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let popUp = storyBoard.instantiateViewController(withIdentifier: "CreateGroup")
+            self.present(popUp, animated: true, completion: nil)
+        }
     }
     
 //    Location set up
@@ -97,16 +116,43 @@ class ViewController: UIViewController {
     
 //    Populating the other people in your group
     @objc func populates(){
-        if UserVars.active == true {
+        if (UserVars.active){
+            StartBtn.backgroundColor = UIColor(displayP3Red: 1.0, green: 0, blue: 0, alpha: 1)
 //            Updating friends array
             ref.child(UserVars.code).observe(DataEventType.value) { (snapshot) in
                 let update = snapshot.value as? [String : AnyObject] ?? [:]
-                for (id, data) in update {
-                    if(id != UserVars.uuid){
-                        UserVars.friends[data["name"] as! String] = data["coords"] as? [Double]
+                if(UserVars.friends.count > update.count-1){
+                    for (name, _) in UserVars.friends{
+                        var found = false
+                        for (id, data) in update {
+                            if(data["name"] as! String == name){
+                                found = true
+                            }
+                            if(id != UserVars.uuid){
+                                UserVars.friends[data["name"] as! String] = data["coords"] as? [Double]
+                            }
+                        }
+                        if(!found){
+                            for annotation in self.MapView.annotations{
+                                if(annotation.title == name){
+                                    self.MapView.removeAnnotation(annotation)
+                                }
+                            }
+                            
+                            UserVars.friends.removeValue(forKey: name)
+                        }
                     }
                 }
+                else{
+                    for (id, data) in update {
+                        if(id != UserVars.uuid){
+                            UserVars.friends[data["name"] as! String] = data["coords"] as? [Double]
+                        }
+                    }
+                }
+                
             }
+           
             ref.child(ViewController.UserVars.code).child(ViewController.UserVars.uuid).updateChildValues(["coords":ViewController.UserVars.coords])
 //          Creating annotations
             for (name, coords) in UserVars.friends{

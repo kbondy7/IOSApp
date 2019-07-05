@@ -24,10 +24,16 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="eFk-ee-2FX"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mif-r0-2aN">
-                                <rect key="frame" x="167" y="560" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Create"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mif-r0-2aN">
+                                <rect key="frame" x="107" y="807" width="200" height="30"/>
+                                <color key="backgroundColor" red="0.52695497084532927" green="0.88336143308441184" blue="0.88644114847715738" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="CzG-LO-7eG"/>
+                                    <constraint firstAttribute="height" constant="30" id="wSj-xG-LFo"/>
+                                </constraints>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="CreateGroupBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="k4C-Gh-LJS"/>
                                 </connections>
@@ -35,15 +41,18 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Mif-r0-2aN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ui5-hg-Zm8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rKP-Xt-Z8G" secondAttribute="trailing" id="YOS-sI-5fk"/>
                             <constraint firstItem="rKP-Xt-Z8G" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aZ5-9p-59W"/>
                             <constraint firstItem="rKP-Xt-Z8G" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cWh-AY-Cbb"/>
                             <constraint firstAttribute="bottom" secondItem="rKP-Xt-Z8G" secondAttribute="bottom" id="nwC-CA-aVH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Mif-r0-2aN" secondAttribute="bottom" constant="25" id="rtd-cv-ziQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="MapView" destination="rKP-Xt-Z8G" id="xmI-wc-8KT"/>
+                        <outlet property="StartBtn" destination="Mif-r0-2aN" id="S33-Nn-gpV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -70,19 +79,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8R-vW-0uT">
-                                        <rect key="frame" x="111" y="304" width="34" height="30"/>
+                                        <rect key="frame" x="105" y="304" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Start"/>
+                                        <color key="backgroundColor" red="0.52695497079999998" green="0.88336143310000004" blue="0.8864411485" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Create">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="StartGroupBtn:" destination="tEU-zs-AYd" eventType="touchUpInside" id="hee-1l-CGG"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sBj-pv-g2K">
-                                        <rect key="frame" x="268" y="53" width="37" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="close"/>
-                                        <connections>
-                                            <action selector="Close:" destination="tEU-zs-AYd" eventType="touchUpInside" id="vJH-bc-isj"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTN-K2-5Y7">
@@ -101,6 +105,15 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sBj-pv-g2K">
+                                        <rect key="frame" x="336" y="6" width="30" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="x"/>
+                                        <connections>
+                                            <action selector="Close:" destination="tEU-zs-AYd" eventType="touchUpInside" id="vJH-bc-isj"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>

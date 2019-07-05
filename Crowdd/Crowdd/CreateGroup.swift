@@ -19,7 +19,7 @@ class CreateGroup: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         CodeEntry.delegate = self
         ref = Database.database().reference()
-        ViewController.UserVars.code = randomString(length: 10)
+        ViewController.UserVars.code = randomString(length: 1)
         ViewController.UserVars.uuid = UIDevice.current.identifierForVendor?.uuidString ?? "ERROR"
         self.CodeLabel.text = ViewController.UserVars.code
         // Do any additional setup after loading the view.
