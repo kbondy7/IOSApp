@@ -48,6 +48,15 @@ class ViewController: UIViewController {
         locationManager.pausesLocationUpdatesAutomatically = false
     }
     
+    
+    
+    @IBAction func ProfileBtn(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let Home = storyBoard.instantiateViewController(withIdentifier: "Profile")
+        self.present(Home, animated: true, completion: nil)
+    }
+    
+    
 //    Takes you to the group page
     @IBAction func CreateGroupBtn(_ sender: UIButton) {
         if(UserVars.active)
