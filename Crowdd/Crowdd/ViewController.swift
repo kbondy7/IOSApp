@@ -20,10 +20,14 @@ class ViewController: UIViewController {
     var timer = Timer()
     @IBOutlet weak var MapView: MKMapView!
     @IBOutlet weak var StartBtn: UIButton!
+    @IBOutlet weak var Group: UILabel!
+    
+    let defaults = UserDefaults.standard
+    
     
 //    Global variables
     struct UserVars{
-        static var name = "Doug"
+        static var name = UserDefaults.standard.string(forKey: "name")
         static var uuid = UIDevice.current.identifierForVendor?.uuidString ?? "ERROR"
         static var active = false
         static var code = ""
@@ -34,18 +38,29 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         ref =  Database.database().reference()
-        if(UserVars.active == true){
-            populates()
-            
-            
-        }
+        
 //        Timer
         timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ViewController.populates), userInfo: nil, repeats: true)
 //        Location services
         checkLocationServices()
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if(!defaults.bool(forKey: "FirstTime"))
+        {
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let popUp = storyBoard.instantiateViewController(withIdentifier: "OnBoard")
+            self.present(popUp, animated: true, completion: nil)
+        }
+        if(UserVars.active == true){
+            populates()
+            Group.text = UserVars.code
+            
+        }
     }
     
     
@@ -62,6 +77,7 @@ class ViewController: UIViewController {
         if(UserVars.active)
         {
             UserVars.active = false
+            Group.text = "Inactive"
             StartBtn.backgroundColor = UIColor(displayP3Red: 0, green: 1.0, blue: 0, alpha: 1)
             if(UserVars.friends.count == 0){
                 ref.child(UserVars.code).removeValue()
@@ -126,6 +142,9 @@ class ViewController: UIViewController {
 //    Populating the other people in your group
     @objc func populates(){
         if (UserVars.active){
+            if(Group.text == "Inactive"){
+                Group.text = UserVars.code
+            }
             StartBtn.backgroundColor = UIColor(displayP3Red: 1.0, green: 0, blue: 0, alpha: 1)
 //            Updating friends array
             ref.child(UserVars.code).observe(DataEventType.value) { (snapshot) in

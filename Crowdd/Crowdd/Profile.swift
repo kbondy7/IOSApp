@@ -10,9 +10,10 @@ import UIKit
 
 class Profile: UIViewController {
 
+    @IBOutlet weak var NameLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        NameLabel.text = ViewController.UserVars.name
         // Do any additional setup after loading the view.
     }
     
