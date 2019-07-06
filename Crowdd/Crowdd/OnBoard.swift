@@ -8,18 +8,23 @@
 
 import UIKit
 
-class OnBoard: UIViewController {
+class OnBoard: UIViewController, UITextFieldDelegate {
     let defaults = UserDefaults.standard
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    
     
     @IBOutlet weak var FirstNameEntry: UITextField!
     
     @IBOutlet weak var LastNameEntry: UITextField!
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        FirstNameEntry.delegate = self
+        LastNameEntry.delegate = self
+        // Do any additional setup after loading the view.
+    }
+    
     @IBAction func EnterBtn(_ sender: UIButton) {
         let First = FirstNameEntry?.text ?? "empty"
         let Last = LastNameEntry?.text ?? "empty"
@@ -35,6 +40,13 @@ class OnBoard: UIViewController {
         
         
         
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        //or
+        //self.view.endEditing(true)
+        return true
     }
     /*
     // MARK: - Navigation
