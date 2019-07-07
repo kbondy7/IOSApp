@@ -16,8 +16,10 @@
 		B404230A22C5B04D00E31DD3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B404230822C5B04D00E31DD3 /* LaunchScreen.storyboard */; };
 		B404231522C5B04D00E31DD3 /* CrowddTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404231422C5B04D00E31DD3 /* CrowddTests.swift */; };
 		B404232022C5B04D00E31DD3 /* CrowddUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404231F22C5B04D00E31DD3 /* CrowddUITests.swift */; };
+		B465E63022D15DE400398C4C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B465E62F22D15DE400398C4C /* GoogleService-Info.plist */; };
 		B4B36BF822CAEACC009D2411 /* CreateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B36BF722CAEACC009D2411 /* CreateGroup.swift */; };
-		B4BC83A122C5B7060095D433 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4BC83A022C5B7060095D433 /* GoogleService-Info.plist */; };
+		B4F009A522D02AAE006BA214 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F009A422D02AAE006BA214 /* Profile.swift */; };
+		B4F009A722D10BC3006BA214 /* OnBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F009A622D10BC3006BA214 /* OnBoard.swift */; };
 		B90193995E1463AE2DFF5721 /* Pods_CrowddUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6817E7E2B01E782D2AB065C0 /* Pods_CrowddUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,8 +60,11 @@
 		B404231B22C5B04D00E31DD3 /* CrowddUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrowddUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B404231F22C5B04D00E31DD3 /* CrowddUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrowddUITests.swift; sourceTree = "<group>"; };
 		B404232122C5B04D00E31DD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B465E62F22D15DE400398C4C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4B36BF722CAEACC009D2411 /* CreateGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroup.swift; sourceTree = "<group>"; };
-		B4BC83A022C5B7060095D433 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B4F009A422D02AAE006BA214 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		B4F009A622D10BC3006BA214 /* OnBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoard.swift; sourceTree = "<group>"; };
+		B4F009A822D1521F006BA214 /* Crowdd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Crowdd.entitlements; sourceTree = "<group>"; };
 		E841D4E2137E06014617C389 /* Pods_CrowddTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CrowddTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA9595BB004470AA2B55A982 /* Pods-Crowdd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crowdd.debug.xcconfig"; path = "Target Support Files/Pods-Crowdd/Pods-Crowdd.debug.xcconfig"; sourceTree = "<group>"; };
 		F2352D133760E397433E46A8 /* Pods-CrowddTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CrowddTests.debug.xcconfig"; path = "Target Support Files/Pods-CrowddTests/Pods-CrowddTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -141,13 +146,16 @@
 		B40422FE22C5B04A00E31DD3 /* Crowdd */ = {
 			isa = PBXGroup;
 			children = (
+				B4F009A822D1521F006BA214 /* Crowdd.entitlements */,
 				B40422FF22C5B04A00E31DD3 /* AppDelegate.swift */,
 				B404230122C5B04A00E31DD3 /* ViewController.swift */,
 				B404230322C5B04A00E31DD3 /* Main.storyboard */,
+				B4F009A622D10BC3006BA214 /* OnBoard.swift */,
 				B4B36BF722CAEACC009D2411 /* CreateGroup.swift */,
+				B4F009A422D02AAE006BA214 /* Profile.swift */,
 				B404230622C5B04D00E31DD3 /* Assets.xcassets */,
 				B404230822C5B04D00E31DD3 /* LaunchScreen.storyboard */,
-				B4BC83A022C5B7060095D433 /* GoogleService-Info.plist */,
+				B465E62F22D15DE400398C4C /* GoogleService-Info.plist */,
 				B404230B22C5B04D00E31DD3 /* Info.plist */,
 			);
 			path = Crowdd;
@@ -247,6 +255,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					B404230F22C5B04D00E31DD3 = {
@@ -285,7 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B404230A22C5B04D00E31DD3 /* LaunchScreen.storyboard in Resources */,
-				B4BC83A122C5B7060095D433 /* GoogleService-Info.plist in Resources */,
+				B465E63022D15DE400398C4C /* GoogleService-Info.plist in Resources */,
 				B404230722C5B04D00E31DD3 /* Assets.xcassets in Resources */,
 				B404230522C5B04A00E31DD3 /* Main.storyboard in Resources */,
 			);
@@ -399,7 +410,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B404230222C5B04A00E31DD3 /* ViewController.swift in Sources */,
+				B4F009A522D02AAE006BA214 /* Profile.swift in Sources */,
 				B4B36BF822CAEACC009D2411 /* CreateGroup.swift in Sources */,
+				B4F009A722D10BC3006BA214 /* OnBoard.swift in Sources */,
 				B404230022C5B04A00E31DD3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -576,14 +589,15 @@
 			baseConfigurationReference = EA9595BB004470AA2B55A982 /* Pods-Crowdd.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Crowdd/Crowdd.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D7JJU3M3C7;
+				DEVELOPMENT_TEAM = 8426A5FC57;
 				INFOPLIST_FILE = Crowdd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Kieran.Crowdd;
+				PRODUCT_BUNDLE_IDENTIFIER = Kieran.Crowdd1.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -595,14 +609,15 @@
 			baseConfigurationReference = AAEB72D30C51C84A6028FE30 /* Pods-Crowdd.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Crowdd/Crowdd.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D7JJU3M3C7;
+				DEVELOPMENT_TEAM = 8426A5FC57;
 				INFOPLIST_FILE = Crowdd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Kieran.Crowdd;
+				PRODUCT_BUNDLE_IDENTIFIER = Kieran.Crowdd1.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -47,6 +47,7 @@ class CreateGroup: UIViewController, UITextFieldDelegate {
         }
         ViewController.UserVars.active = true
         dismiss(animated: true)
+        
     }
     @IBAction func Close(_ sender: UIButton) {
         dismiss(animated: true)
