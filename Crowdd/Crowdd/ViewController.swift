@@ -78,7 +78,6 @@ class ViewController: UIViewController {
         {
             UserVars.active = false
             Group.text = "Inactive"
-            StartBtn.backgroundColor = UIColor(displayP3Red: 0, green: 1.0, blue: 0, alpha: 1)
             if(UserVars.friends.count == 0){
                 ref.child(UserVars.code).removeValue()
             }
@@ -145,7 +144,6 @@ class ViewController: UIViewController {
             if(Group.text == "Inactive"){
                 Group.text = UserVars.code
             }
-            StartBtn.backgroundColor = UIColor(displayP3Red: 1.0, green: 0, blue: 0, alpha: 1)
 //            Updating friends array
             ref.child(UserVars.code).observe(DataEventType.value) { (snapshot) in
                 let update = snapshot.value as? [String : AnyObject] ?? [:]
