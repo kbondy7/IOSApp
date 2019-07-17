@@ -28,6 +28,13 @@ class OnBoard: UIViewController, UITextFieldDelegate {
     @IBAction func EnterBtn(_ sender: UIButton) {
         let First = FirstNameEntry?.text ?? "empty"
         let Last = LastNameEntry?.text ?? "empty"
+        
+        let firstInitial = First.prefix(1)
+        let lastInitial = Last.prefix(1)
+        
+//        print(firstInitial)
+//        print(lastInitial)
+        
         if(First == "empty" || Last == "empty"){
             
         }
@@ -35,6 +42,9 @@ class OnBoard: UIViewController, UITextFieldDelegate {
             defaults.set(true, forKey: "FirstTime")
             let name = First + " " + Last
             defaults.set(name, forKey: "name")
+            defaults.set(firstInitial, forKey: "firstInitial")
+            defaults.set(lastInitial, forKey: "lastInitial")
+            
             dismiss(animated: true)
         }
         

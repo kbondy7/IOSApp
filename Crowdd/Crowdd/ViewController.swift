@@ -28,6 +28,9 @@ class ViewController: UIViewController {
 //    Global variables
     struct UserVars{
         static var name = UserDefaults.standard.string(forKey: "name")
+        static var firstInitial = UserDefaults.standard.string(forKey: "firstInitial")
+        static var lastInitial = UserDefaults.standard.string(forKey: "lastInitial")
+
         static var uuid = UIDevice.current.identifierForVendor?.uuidString ?? "ERROR"
         static var active = false
         static var code = ""
@@ -39,6 +42,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        MapView.delegate = self
+        
         ref =  Database.database().reference()
         
 //        Timer
@@ -47,6 +52,7 @@ class ViewController: UIViewController {
         checkLocationServices()
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -138,6 +144,42 @@ class ViewController: UIViewController {
         }
     }
     
+// Building Annotation Images
+    func createAnnotations(drawText: NSString, inImage:UIImage, atPoint:CGPoint) -> UIImage{
+        //let initials = UserVars.firstInitial + UserVars.lastInitial
+        
+        let textColor = UIColor.white
+        let textFont = UIFont(name: "Helvetica Bold", size: 20)!
+        
+        // Setup the image context using the passed image
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(inImage.size, false, scale)
+        
+        // Setup the font attributes that will be later used to dictate how the text should be drawn
+        let textFontAttributes = [
+            NSAttributedString.Key.font: textFont,
+            NSAttributedString.Key.foregroundColor: textColor,
+        ]
+        
+        inImage.draw(in: CGRect(x: 0, y: 0, width: inImage.size.width, height: inImage.size.height))
+        
+        // Create a point within the space that is as bit as the image
+        let rect = CGRect(x: atPoint.x, y: atPoint.y, width: inImage.size.width, height: inImage.size.height)
+        
+        // Draw the text into an image
+        drawText.draw(in: rect, withAttributes: textFontAttributes)
+        
+        // Create a new image out of the images we have created
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        // End the context now that we have the image we need
+        UIGraphicsEndImageContext()
+        
+        //Pass the image back up to the caller
+        return newImage
+        
+    }
+    
 //    Populating the other people in your group
     @objc func populates(){
         if (UserVars.active){
@@ -184,21 +226,52 @@ class ViewController: UIViewController {
             for (name, coords) in UserVars.friends{
                 var found = false
                 for pin in UserVars.pins{
-                    if(pin.title == name){
+                    if(pin.subtitle == name){
                         pin.coordinate = CLLocationCoordinate2D(latitude: coords[0], longitude: coords[1])
                         found = true
                     }
                 }
                 if(!found){
                     let createpoint = MKPointAnnotation()
-                    createpoint.title = name
+                    createpoint.subtitle = name
                     createpoint.coordinate = CLLocationCoordinate2D(latitude: coords[0], longitude: coords[1])
                     UserVars.pins.append(createpoint)
                     MapView.addAnnotation(createpoint)
                 }
             }
         }
+    
     }
+}
+
+
+//Annotation Images
+extension ViewController:MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        var newImage = createAnnotations(drawText: "CB", inImage: UIImage(named:"userLocationShadow")!, atPoint: CGPoint(x: 50, y: 50))
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "annotationView")
+        }
+        if annotation === mapView.userLocation{
+            annotationView?.image = newImage
+        } else {
+            annotationView?.image = UIImage(named: "locationImageShadow")
+        }
+        
+        annotationView?.canShowCallout = true;
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("annotation was selected")
+    }
+    
 }
 
 extension ViewController : CLLocationManagerDelegate {
@@ -212,6 +285,7 @@ extension ViewController : CLLocationManagerDelegate {
         if (UserVars.active == true){
             ref.child(UserVars.code).child(UserVars.uuid).updateChildValues(["coords":UserVars.coords])
         }
+        
         
     }
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
