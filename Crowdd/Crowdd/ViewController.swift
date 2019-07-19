@@ -161,9 +161,8 @@ class ViewController: UIViewController {
         
         for (name, coords) in UserVars.friends{
             let drawText = getInitials(name: name as NSString)
-            
-            let textColor = UIColor.red
-            let textFont = UIFont(name: "Helvetica Bold", size: 12)!
+            let textColor = UIColor.init(netHex: 0x00a793)
+            let textFont = UIFont(name: "Avenir", size: 14)!
             
             
             // Setup the image context using the passed image
@@ -268,7 +267,7 @@ extension ViewController:MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        let newImage = createAnnotations(inImage: UIImage(named:"friendLocation-1")!, atPoint: CGPoint(x: 20, y: 20))
+        let newImage = createAnnotations(inImage: UIImage(named:"friendLocation-1")!, atPoint: CGPoint(x: 25, y: 25))
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView")
         
@@ -276,7 +275,7 @@ extension ViewController:MKMapViewDelegate {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "annotationView")
         }
         if annotation === mapView.userLocation{
-            annotationView?.image = UIImage(named: "userLoc")
+            annotationView?.image = UIImage(named: "userLov")
         } else {
             annotationView?.image = newImage
         }
@@ -291,6 +290,20 @@ extension ViewController:MKMapViewDelegate {
     }
     
 }
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(netHex:Int) {
+        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
+    }
+}
+
 
 extension ViewController : CLLocationManagerDelegate {
     
