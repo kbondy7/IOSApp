@@ -162,8 +162,9 @@ class ViewController: UIViewController {
         for (name, coords) in UserVars.friends{
             let drawText = getInitials(name: name as NSString)
             
-            let textColor = UIColor.white
-            let textFont = UIFont(name: "Helvetica Bold", size: 20)!
+            let textColor = UIColor.red
+            let textFont = UIFont(name: "Helvetica Bold", size: 12)!
+            
             
             // Setup the image context using the passed image
             let scale = UIScreen.main.scale
@@ -267,7 +268,7 @@ extension ViewController:MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        let newImage = createAnnotations(inImage: UIImage(named:"userLocationShadow")!, atPoint: CGPoint(x: 50, y: 50))
+        let newImage = createAnnotations(inImage: UIImage(named:"friendLocation-1")!, atPoint: CGPoint(x: 20, y: 20))
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView")
         
@@ -275,7 +276,7 @@ extension ViewController:MKMapViewDelegate {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "annotationView")
         }
         if annotation === mapView.userLocation{
-            annotationView?.image = UIImage(named: "locationImageShadow")
+            annotationView?.image = UIImage(named: "userLoc")
         } else {
             annotationView?.image = newImage
         }
