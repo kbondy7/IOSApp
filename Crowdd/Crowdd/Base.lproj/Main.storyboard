@@ -143,6 +143,14 @@
                                     <action selector="Close:" destination="tEU-zs-AYd" eventType="touchUpInside" id="vJH-bc-isj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXI-dJ-wLc">
+                                <rect key="frame" x="189" y="473" width="36" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Copy"/>
+                                <connections>
+                                    <action selector="CopyBtn:" destination="tEU-zs-AYd" eventType="touchUpInside" id="INl-6h-0ti"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.23073630136986301" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -172,6 +180,7 @@
                     <connections>
                         <outlet property="CodeEntry" destination="9sW-cy-sbb" id="kGL-2s-8Lf"/>
                         <outlet property="CodeLabel" destination="hMu-zx-6bl" id="I1N-T6-hdL"/>
+                        <outlet property="CopyButton" destination="FXI-dJ-wLc" id="Jib-je-5kC"/>
                         <outlet property="CreateBtn" destination="beV-sZ-PPZ" id="0W6-Pi-WPq"/>
                         <outlet property="JoinBtn" destination="aTN-K2-5Y7" id="9uo-Pa-0sD"/>
                         <outlet property="PageImg" destination="fIj-GC-b2w" id="dbg-fB-XKV"/>

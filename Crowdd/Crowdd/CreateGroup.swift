@@ -15,6 +15,7 @@ class CreateGroup: UIViewController, UITextFieldDelegate {
     let color = UIColor(red: 0/255.0, green: 187/255.0, blue: 195/255.0, alpha: 1.0)
     let white = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     
+    @IBOutlet weak var CopyButton: UIButton!
     @IBOutlet weak var JoinBtn: UIButton!
     @IBOutlet weak var CreateBtn: UIButton!
     @IBOutlet weak var PageImg: UIImageView!
@@ -32,6 +33,9 @@ class CreateGroup: UIViewController, UITextFieldDelegate {
         CodeEntry.isHidden = true
     }
     
+    @IBAction func CopyBtn(_ sender: Any) {
+        UIPasteboard.general.string = ViewController.UserVars.code
+    }
     @IBAction func StartGroupBtn(_ sender: UIButton) {
         if(create){
         ref.child(ViewController.UserVars.code).child(ViewController.UserVars.uuid).setValue(["name":ViewController.UserVars.name,"coords":ViewController.UserVars.coords])
